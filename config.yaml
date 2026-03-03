@@ -1,0 +1,81 @@
+# Sightline Configuration
+# -----------------------
+
+paths:
+  vods_dir: "./data/vods"
+  annotations_dir: "./data/annotations"
+  processed_dir: "./data/processed"
+  models_dir: "./models"
+  maps_dir: "./maps"
+
+video:
+  sample_fps_discovery: 0.5
+  sample_fps_tactical: 5.0
+  sample_fps_burst: 12.0
+  burst_window_sec: 5.0
+  min_resolution: [1280, 720]
+  target_resolution: [1280, 720]
+  scene_change_threshold: 30.0
+  batch_size: 32
+
+minimap:
+  roi_pct: [0.0, 0.694, 0.234, 0.306]
+  yolo_model: "./data/models/minimap_detector.pt"
+  confidence_threshold: 0.5
+  detection_classes:
+    - "a_site"
+    - "b_site"
+    - "bomb"
+    - "new_hp"
+    - "objective"
+    - "player"
+  temporal_vote_window: 10
+
+hud:
+  faze_roster_roi_pct: [0.0, 0.0, 0.20, 0.15]
+  opponent_roster_roi_pct: [0.80, 0.0, 0.20, 0.15]
+  scoreboard_roi_pct: [0.352, 0.0, 0.281, 0.278]
+  killfeed_roi_pct: [0.0, 0.278, 0.273, 0.417]
+  spectated_player_roi_pct: [0.75, 0.80, 0.25, 0.20]
+  ocr_languages: ["en"]
+  ocr_confidence_threshold: 0.6
+  roster_sample_interval_sec: 2.5
+  scoreboard_sample_interval_sec: 1.0
+
+mode_classifier:
+  model_path: "./data/models/mode_classifier.pt"
+  classes: ["hp", "menu", "snd", "unknown"]
+  confidence_threshold: 0.8
+
+round_segmentation:
+  black_frame_threshold: 15
+  score_change_cooldown_sec: 5.0
+  round_min_duration_sec: 15.0
+
+map_grid:
+  grid_size: 5
+
+analysis:
+  llm_provider: "openai"
+  openai_model: "gpt-4o"
+  gemini_model: "gemini-2.0-flash"
+  max_tokens: 2000
+  temperature: 0.7
+
+tracker:
+  algorithm: "bytetrack"
+  track_thresh: 0.25
+  track_buffer: 30
+  match_thresh: 0.8
+
+database:
+  url: "sqlite:///./data/sightline.db"
+
+web:
+  host: "0.0.0.0"
+  port: 8000
+  reload: true
+
+downloader:
+  default_resolution: 720
+  output_format: "mp4"
